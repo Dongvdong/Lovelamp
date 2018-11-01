@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESP8266 配置信息</title>
+    
+  </head>
+  
+  <body>
+  
+   
+		
+	<div style="text-align:center;">
+	   <div id="Layer1" style="position:absolute; width:100%; height:100%; z-index:-1">  
+         <img src="test1.jpg" height="100%" width="100%"/>  
+       </div>    
+       
+      <h1  style="color:#40B3DF;">欢迎使用</h1>
+      
+     
+	   <div  class="starter-template";clear:both;text-align:center;">
+		<h3 style="color:#ffffff;">请配置服务器信息</h3>
+	
+		 
+		  
+           		
+		  
+            <form action=""  style="color:#ffffff;"> 
+            服务器IP: <input type="text" id="mqtt_sever"  />
+			 
+            </form>
+			<form action=""  style="color:#ffffff;"> 
+            服务端口: <input type="text" id="mqtt_port"  />
+            </form>	 <br/>
+			<form action=""  style="color:#ffffff;"> 
+            -入网ID--: <input type="text" id="mqtt_nameid"  />
+            </form>
+			<form action=""  style="color:#ffffff;"> 
+            入网账号: <input type="text" id="mqtt_ssid"  />
+            </form>	 
+			<form action=""  style="color:#ffffff;"> 
+            入网密码: <input type="text" id="mqtt_psw"  />
+            </form>	<br/>
+			<form action=""  style="color:#ffffff;"> 
+            我的话题: <input type="text" id="my_mqtt_topic"  />
+            </form>	 
+			<form action=""  style="color:#ffffff;"> 
+            你的话题: <input type="text" id="your_mqtt_topic"  />
+            </form>	 
+			
+			
+			 <br/>
+			
+			<button onclick='setmqtt(mqtt_sever.value,mqtt_port.value,mqtt_nameid.value ,mqtt_ssid.value ,mqtt_psw.value , my_mqtt_topic.value,your_mqtt_topic.value)' >连接服务器</button>	
+			
+			
+			<br/>
+		
+	      <div style="color:#0033FF;">
+		    <p>服务器连接状态: <span id="wifiState"></span></p>
+		  <div/>
+		
+		<br/>
+			
+	    </div>	
+		
+			
+    </div>
+	 
+	 		
+  
+	
+	
+	
+	
+		   
+	<script type="text/javascript">
+	
+		
+		function setmqtt(mqtt_sever,mqtt_port,mqtt_nameid,mqtt_ssid ,mqtt_psw , my_mqtt_topic,your_mqtt_topic) {
+		  
+            var xmlhttp;
+            if (mqtt_sever.length==0&&mqtt_port.length==0&&mqtt_nameid.length==0&&my_mqtt_topic.length==0&&your_mqtt_topic.length==0)
+            {
+			alert("请输入服务器连接信息！");
+            document.getElementById("wifiState").innerHTML="请输入服务器连接信息！";
+            return;
+            }
+			
+            if (window.XMLHttpRequest)
+            {
+            // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp=new XMLHttpRequest();
+            }
+            else
+            {
+			// IE6, IE5 浏览器执行代码
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+			
+            xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+            //alert(xmlhttp.responseText);
+            //alert("操作成功");
+            document.getElementById("wifiState").innerHTML = xmlhttp.responseText;
+             }
+            }
+            //   /mqtt?mqttconfig=on&mqtt_sever=mqtt_sever&-----
+            var requestString = "/mqtt_html?mqtt_config=on" + "&mqtt_sever="+mqtt_sever+"&mqtt_port="+mqtt_port+"&mqtt_nameid="+mqtt_nameid+"&mqtt_ssid="+mqtt_ssid+"&mqtt_psw="+mqtt_psw+"&my_mqtt_topic="+my_mqtt_topic+"&your_mqtt_topic="+your_mqtt_topic;
+			xmlhttp.open("GET", requestString, true);
+			xmlhttp.send(null);
+		}		
+			
+	</script>
+  </body>
+</html>
